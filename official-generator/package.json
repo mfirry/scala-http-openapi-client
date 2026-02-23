@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "generate": "openapi-generator-cli generate -g scala-sttp4 -i ../openapi/openapi.yaml -o generated --additional-properties=apiPackage=com.example.api,modelPackage=com.example.model,jsonLibrary=circe,sttpClientVersion=4.0.0-M1"
+    "generate": "openapi-generator-cli generate -g scala-sttp -i ../openapi/openapi.yaml -o generated --additional-properties=apiPackage=com.example.api,modelPackage=com.example.model,jsonLibrary=circe"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "latest"

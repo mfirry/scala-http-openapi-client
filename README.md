@@ -93,37 +93,47 @@ scala-cli package . --assembly -o sample-api-client.jar
 
 ## Official OpenAPI Generator
 
-`official-generator/` uses the [official openapi-generator](https://openapi-generator.tech) (`scala-sttp4` generator) to produce a full standalone sbt project from the spec.
+`official-generator/` uses the [official openapi-generator](https://openapi-generator.tech) (`scala-sttp` generator) to produce a full standalone sbt project from the spec.
 
 ### Prerequisites
 
-Node.js and npm are required. Install from [nodejs.org](https://nodejs.org/) if not already present.
+- Node.js and npm — install from [nodejs.org](https://nodejs.org/)
+- Java 11+ — required by the openapi-generator CLI
 
-### macOS
+### Steps
 
-```sh
-./official-generator/generate.sh
-```
-
-### Windows
-
-```powershell
-.\official-generator\generate.ps1
-```
-
-Both scripts run `npm install` (to fetch `@openapitools/openapi-generator-cli`) and then invoke the generator. Output lands in `official-generator/generated/`.
-
-### Using the generated project
-
-The generated code is a self-contained sbt project:
+**1. Install the generator CLI**
 
 ```sh
-cd official-generator/generated
+cd official-generator
+npm install
+```
+
+**2. Run the generator**
+
+```sh
+npm run generate
+```
+
+Output lands in `official-generator/generated/`.
+
+**3. Compile the generated project**
+
+```sh
+cd generated
 sbt compile
 ```
 
-It produces:
-- **Model classes** under `com.example.model`
-- **API trait + implementation** under `com.example.api` backed by sttp4 + circe
+### What is generated
 
-To change generation options (packages, JSON library, sttp version) edit the `generate` script in `official-generator/package.json`.
+- **API class** under `com.example.api` backed by sttp (client3) + circe
+- Supporting infrastructure under `org.openapitools.client.core` (JSON support, date serializers)
+
+### Changing generation options
+
+Edit the `generate` script in `official-generator/package.json`. The relevant flags are:
+
+| Flag | Current value | Description |
+|---|---|---|
+| `-g` | `scala-sttp` | Generator name |
+| `--additional-properties` | `apiPackage`, `modelPackage`, `jsonLibrary` | Package names and JSON library |
