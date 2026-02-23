@@ -1,0 +1,7 @@
+CLAUDE.md
+.bsp/
+.scala-build/
+.metals/
+.idea/
+*.class
+*.jar
