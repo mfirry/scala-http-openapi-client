@@ -1,14 +1,12 @@
+// AUTO-GENERATED — do not edit by hand.
+// Regenerate with: scala-cli run generator/
 import sttp.client3.*
 import sttp.client3.circe.*
 
-/** Client for the Sample API (http://api.example.com/v1).
-  *
-  * Implements AutoCloseable so it can be used with [[scala.util.Using]].
-  */
 class SampleApiClient(baseUrl: String) extends AutoCloseable:
   private val backend = HttpClientSyncBackend()
 
-  /** GET /users – returns the list of user names. */
+  /** Returns a list of users. */
   def getUsers(): Either[String, List[String]] =
     basicRequest
       .get(uri"$baseUrl/users")

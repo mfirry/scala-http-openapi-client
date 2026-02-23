@@ -2,6 +2,8 @@
 
 An HTTP client for the [Sample API](openapi/openapi.yaml), written in Scala 3 using [scala-cli](https://scala-cli.virtuslab.org/) and [sttp](https://sttp.softwaremill.com/).
 
+The client source (`src/SampleApiClient.scala`) is **auto-generated** from the OpenAPI spec by the generator in `generator/`.
+
 ---
 
 ## Install scala-cli
@@ -44,19 +46,21 @@ scala-cli --version
 
 ---
 
-## Compile the project
+## Run the generator
 
-Compile all sources and resolve dependencies:
-
-```sh
-scala-cli compile .
-```
-
-To produce a standalone fat JAR:
+The generator reads `openapi/openapi.yaml` and writes `src/SampleApiClient.scala`. Run it whenever the spec changes:
 
 ```sh
-scala-cli package . --assembly -o sample-api-client.jar
+scala-cli run generator/
 ```
+
+The generator supports:
+
+- All standard HTTP methods (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`)
+- Path parameters (e.g. `/users/{id}`)
+- Query parameters
+- Response body types (`string`, `integer`, `number`, `boolean`, `array`)
+- `operationId` as the method name when present, otherwise derived from the HTTP method and path
 
 ---
 
@@ -72,4 +76,10 @@ To point the client at a different base URL, edit `src/Main.scala` and pass the 
 Using.resource(SampleApiClient(baseUrl = "http://staging-api.example.com")) { client =>
   ...
 }
+```
+
+To produce a standalone fat JAR:
+
+```sh
+scala-cli package . --assembly -o sample-api-client.jar
 ```
